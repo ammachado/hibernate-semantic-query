@@ -73,7 +73,6 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         criteriaQuerySelect = SemanticQueryInterpreter.interpret(q, consumerContext);
 
-        assertNotNull(criteriaQuerySelect);
 
     }
 
