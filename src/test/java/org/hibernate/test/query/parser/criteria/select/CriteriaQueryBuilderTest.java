@@ -1,8 +1,12 @@
 package org.hibernate.test.query.parser.criteria.select;
 
+import org.hibernate.sqm.domain.DomainMetamodel;
 import org.hibernate.sqm.parser.SemanticQueryInterpreter;
 import org.hibernate.sqm.query.QuerySpec;
 import org.hibernate.sqm.query.SelectStatement;
+import org.hibernate.test.query.parser.ConsumerContextImpl;
+import org.hibernate.test.sqm.domain.EntityTypeImpl;
+import org.hibernate.test.sqm.domain.ExplicitDomainMetamodel;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
@@ -10,6 +14,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
@@ -24,6 +31,8 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
         super();
     }
 
+    final ConsumerContextImpl consumerContext = new ConsumerContextImpl( buildMetamodel() );
+
     @Test
     public void simpleCriteriaQuerTest() {
 
@@ -32,14 +41,23 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         EntityManager em = factory.createEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
+
         CriteriaQuery<Book> q = cb.createQuery( Book.class );
         Root<Book> b = q.from( Book.class );
-        q.select( b ).orderBy( cb.desc( b.get( "id" ) ) );
+
+        // Create String path and parameter expressions:
+        Expression<String> author = b.get("author");
+
+        ParameterExpression<Integer> p = cb.parameter(Integer.class);
+        q.select( b );
+        q.orderBy( cb.desc( b.get( "id" ) ) );
+        Predicate n2 = cb.isNotNull(author);
 
 
         SelectStatement criteriaQuerySelect = null;
 
-        criteriaQuerySelect = SemanticQueryInterpreter.interpret( q, null );
+
+        criteriaQuerySelect = SemanticQueryInterpreter.interpret( q, consumerContext );
 
         assertNotNull( criteriaQuerySelect );
 
@@ -66,12 +84,18 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         SelectStatement criteriaQuerySelect = null;
 
-        criteriaQuerySelect = SemanticQueryInterpreter.interpret( q, null );
+        criteriaQuerySelect = SemanticQueryInterpreter.interpret( q, consumerContext );
 
         assertNotNull( criteriaQuerySpec );
 
     }
 
 
+
+    private DomainMetamodel buildMetamodel() {
+        ExplicitDomainMetamodel metamodel = new ExplicitDomainMetamodel();
+        EntityTypeImpl entityType = metamodel.makeEntityType( "org.hibernate.test.query.parser.criteria.select.Book" );
+        return metamodel;
+    }
 
 }

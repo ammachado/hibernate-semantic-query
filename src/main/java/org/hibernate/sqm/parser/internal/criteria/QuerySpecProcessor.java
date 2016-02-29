@@ -236,6 +236,12 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 				applySelection( nestedSelection, containerForSelections );
 			}
 		}
+		else if ( selection instanceof Root ) {
+			container.add(
+					visitExpression((javax.persistence.criteria.Expression) selection),
+					interpretAlias(selection.getAlias())
+			);
+		}
 		else if ( selection instanceof Expression ) {
 			container.add(
 					visitExpression( (javax.persistence.criteria.Expression) selection ),
@@ -244,7 +250,14 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 		}
 		else {
 			// check the "compound selection items" anyway..
-			if ( selection.getCompoundSelectionItems().size() == 1 ) {
+			List<Selection<?>> compoundSelctionItems = null;
+			try{
+				compoundSelctionItems = selection.getCompoundSelectionItems();
+			}
+			catch (Exception ignore){
+
+			}
+			if ( compoundSelctionItems != null && compoundSelctionItems.size() == 1 ) {
 				applySelection( selection.getCompoundSelectionItems().get( 0 ), container );
 			}
 			else {

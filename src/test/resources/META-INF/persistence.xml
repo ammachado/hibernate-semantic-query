@@ -2,6 +2,6 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="Books">
         <class>org.hibernate.test.query.parser.criteria.select.Book</class>
-        <!--<class>org.hibernate.query.parser.hql.Author</class>-->
+        <class>org.hibernate.test.query.parser.criteria.select.Author</class>
     </persistence-unit>
 </persistence>
