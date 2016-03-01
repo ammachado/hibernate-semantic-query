@@ -11,5 +11,5 @@ import javax.persistence.criteria.Expression;
 /**
  * @author Steve Ebersole
  */
-public interface ExpressionImplementor<X> extends Expression<X>, Visitable<org.hibernate.sqm.query.expression.Expression> {
+public interface VisitableExpressionImplementor<X> extends Expression<X>, Visitable<org.hibernate.sqm.query.expression.Expression> {
 }
