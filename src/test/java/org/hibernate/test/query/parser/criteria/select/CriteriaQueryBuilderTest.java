@@ -2,8 +2,8 @@ package org.hibernate.test.query.parser.criteria.select;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.xpath.XPath;
+import org.hibernate.sqm.SemanticQueryInterpreter;
 import org.hibernate.sqm.domain.DomainMetamodel;
-import org.hibernate.sqm.parser.SemanticQueryInterpreter;
 import org.hibernate.sqm.parser.internal.hql.HqlParseTreeBuilder;
 import org.hibernate.sqm.parser.internal.hql.antlr.HqlParser;
 import org.hibernate.sqm.path.FromElementBinding;

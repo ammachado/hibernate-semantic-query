@@ -45,7 +45,7 @@ public class ParsingContext {
 		assert old == null;
 	}
 
-	public void findElementByUniqueId(String uid) {
-		globalFromElementMap.get( uid );
+	public FromElement findElementByUniqueId(String uid) {
+		return globalFromElementMap.get( uid );
 	}
 }

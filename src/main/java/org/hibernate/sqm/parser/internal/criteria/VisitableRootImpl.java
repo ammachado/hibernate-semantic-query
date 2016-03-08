@@ -1,10 +1,16 @@
 package org.hibernate.sqm.parser.internal.criteria;
 
 import org.hibernate.jpa.criteria.path.RootImpl;
+import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.query.from.FromElement;
+import org.hibernate.sqm.query.from.FromElementSpace;
+import org.hibernate.sqm.query.from.RootEntityFromElement;
+import org.hibernate.sqm.query.select.SelectClause;
 
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Selection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +27,25 @@ public class VisitableRootImpl<X> implements VisitableExpressionImplementor<X> {
 
     @Override
     public org.hibernate.sqm.query.expression.Expression accept(CriteriaVisitor visitor) {
-        return null;
+
+        //Lookup UID based on rootImpl
+        FromElement fromElement = visitor.getParsingContext().findElementByUniqueId("<uid:1>");
+
+//        RootEntityFromElement rootEntityFromElement = null;
+
+        RootEntityFromElement rootEntityFromElement = new RootEntityFromElement(fromElement.getContainingSpace(),
+                fromElement.getUniqueIdentifier(),
+                rootImpl.getAlias(),
+                (EntityType) fromElement.getAttributeContributingType()
+        );
+
+        List<org.hibernate.sqm.query.select.Selection> selections  = new ArrayList<org.hibernate.sqm.query.select.Selection>();
+
+        org.hibernate.sqm.query.select.Selection selection = new org.hibernate.sqm.query.select.Selection(rootEntityFromElement) ;
+        selections.add(selection);
+
+        return new SelectClause(false, selections ).getSelections().get(0).getExpression();
+//        return null;
     }
 
     public RootImpl<X> getRootImpl() {

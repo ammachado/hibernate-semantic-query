@@ -13,6 +13,7 @@ import javax.persistence.criteria.Subquery;
 
 import org.hibernate.sqm.domain.BasicType;
 import org.hibernate.sqm.domain.Type;
+import org.hibernate.sqm.parser.internal.ParsingContext;
 import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.expression.AttributeReferenceExpression;
 import org.hibernate.sqm.query.expression.AvgFunction;
@@ -159,4 +160,6 @@ public interface CriteriaVisitor {
 			javax.persistence.criteria.Expression testExpression,
 			List<javax.persistence.criteria.Expression> listExpressions,
 			boolean negated);
+
+	ParsingContext getParsingContext();
 }

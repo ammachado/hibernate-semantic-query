@@ -637,7 +637,9 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 	}
 
 	protected Predicate visitPredicate(javax.persistence.criteria.Predicate predicate) {
-		return ( (PredicateImplementor) predicate ).accept( this );
+		if( predicate != null)
+			return ( (PredicateImplementor) predicate ).accept( this );
+		return  null;
 	}
 
 	protected Predicate visitPredicate(javax.persistence.criteria.Expression<Boolean> predicate) {
@@ -786,5 +788,10 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 				expressions,
 				negated
 		);
+	}
+
+	@Override
+	public ParsingContext getParsingContext() {
+		return this.parsingContext;
 	}
 }

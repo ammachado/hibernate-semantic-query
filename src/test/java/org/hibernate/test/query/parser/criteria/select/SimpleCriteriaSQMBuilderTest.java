@@ -1,8 +1,8 @@
 package org.hibernate.test.query.parser.criteria.select;
 
+import org.hibernate.sqm.SemanticQueryInterpreter;
 import org.hibernate.sqm.domain.DomainMetamodel;
 import org.hibernate.sqm.domain.SingularAttribute;
-import org.hibernate.sqm.parser.SemanticQueryInterpreter;
 import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.SelectStatement;
 import org.hibernate.sqm.query.select.Selection;
