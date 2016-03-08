@@ -3,6 +3,7 @@ package org.hibernate.test.query.parser.criteria.select;
 import junit.framework.Assert;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.xpath.XPath;
+import org.hibernate.hql.internal.ast.tree.SelectExpression;
 import org.hibernate.sqm.SemanticQueryInterpreter;
 import org.hibernate.sqm.domain.DomainMetamodel;
 import org.hibernate.sqm.parser.internal.hql.HqlParseTreeBuilder;
@@ -10,9 +11,11 @@ import org.hibernate.sqm.parser.internal.hql.antlr.HqlParser;
 import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.QuerySpec;
 import org.hibernate.sqm.query.SelectStatement;
+import org.hibernate.sqm.query.expression.MapEntryFunction;
 import org.hibernate.sqm.query.from.FromClause;
 import org.hibernate.sqm.query.from.FromElementSpace;
 import org.hibernate.sqm.query.from.RootEntityFromElement;
+import org.hibernate.sqm.query.select.SelectClause;
 import org.hibernate.sqm.query.select.Selection;
 import org.hibernate.test.query.parser.ConsumerContextImpl;
 import org.hibernate.test.sqm.domain.EntityTypeImpl;
@@ -99,14 +102,41 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
         assertNotNull(selectStatement);
 
         assertNotNull(selectStatement.getQuerySpec());
+        assertNotNull(selectStatement.getQuerySpec().getSelectClause());
         assertNotNull(selectStatement.getQuerySpec().getFromClause());
+        assertNull(selectStatement.getQuerySpec().getWhereClause());
 
-        FromClause from =selectStatement.getQuerySpec().getFromClause();
+        FromClause from = selectStatement.getQuerySpec().getFromClause();
         assertEquals(1, from.getFromElementSpaces().size());
 
         FromElementSpace fromElementSpace = from.getFromElementSpaces().get(0);
 
-        assertEquals(RootEntityFromElement.class.getSimpleName(), fromElementSpace.getRoot().getClass().getSimpleName());
+        assertThat(
+                fromElementSpace.getRoot(),
+                instanceOf( RootEntityFromElement.class )
+        );
+
+        assertEquals("<uid:1>", fromElementSpace.getRoot().getUniqueIdentifier());
+
+        SelectClause selectClause = selectStatement.getQuerySpec().getSelectClause();
+
+        assertTrue(selectClause.isDistinct() == false);
+
+        assertEquals(1,selectClause.getSelections().size());
+
+        Selection selection = selectClause.getSelections().get(0);
+
+//TODO: look at why different aliases are generated for CriteriaQuery vs JPQL - does it matter?
+//        assertEquals("<gen:0>", selection.getAlias());
+
+        assertThat(
+                selection.getExpression(),
+                instanceOf( RootEntityFromElement.class )
+        );
+
+        assertEquals(fromElementSpace.getRoot(), selection.getExpression());
+
+//        SelectExpression selectExpression = selection.getExpression()
 
     }
 /*
