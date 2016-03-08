@@ -1,5 +1,6 @@
 package org.hibernate.test.query.parser.criteria.select;
 
+import junit.framework.Assert;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.xpath.XPath;
 import org.hibernate.sqm.SemanticQueryInterpreter;
@@ -9,6 +10,9 @@ import org.hibernate.sqm.parser.internal.hql.antlr.HqlParser;
 import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.QuerySpec;
 import org.hibernate.sqm.query.SelectStatement;
+import org.hibernate.sqm.query.from.FromClause;
+import org.hibernate.sqm.query.from.FromElementSpace;
+import org.hibernate.sqm.query.from.RootEntityFromElement;
 import org.hibernate.sqm.query.select.Selection;
 import org.hibernate.test.query.parser.ConsumerContextImpl;
 import org.hibernate.test.sqm.domain.EntityTypeImpl;
@@ -28,6 +32,7 @@ import javax.persistence.criteria.Root;
 
 import java.util.Collection;
 
+import static junit.framework.Assert.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -73,6 +78,7 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         criteriaQuerySelect = SemanticQueryInterpreter.interpret(q, consumerContext);
 
+        checkStatement(criteriaQuerySelect);
 
     }
 
@@ -84,10 +90,25 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         SelectStatement statement = (SelectStatement) SemanticQueryInterpreter.interpret( QUERY , consumerContext );
 
-        assertNotNull(statement);
 
+        checkStatement(statement);
     }
 
+
+    private void checkStatement(SelectStatement selectStatement){
+        assertNotNull(selectStatement);
+
+        assertNotNull(selectStatement.getQuerySpec());
+        assertNotNull(selectStatement.getQuerySpec().getFromClause());
+
+        FromClause from =selectStatement.getQuerySpec().getFromClause();
+        assertEquals(1, from.getFromElementSpaces().size());
+
+        FromElementSpace fromElementSpace = from.getFromElementSpaces().get(0);
+
+        assertEquals(RootEntityFromElement.class.getSimpleName(), fromElementSpace.getRoot().getClass().getSimpleName());
+
+    }
 /*
     @Test
     public void joinCriteriaQuerTest() {

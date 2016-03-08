@@ -631,9 +631,13 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 	}
 
 	private WhereClause visitWhereClause(AbstractQuery<?> jpaCriteria) {
-		final WhereClause whereClause = new WhereClause();
-		whereClause.setPredicate( visitPredicate( jpaCriteria.getRestriction() ) );
-		return whereClause;
+		Predicate predeicate = visitPredicate( jpaCriteria.getRestriction() );
+		if(predeicate != null){
+			final WhereClause whereClause = new WhereClause();
+			whereClause.setPredicate( predeicate );
+			return whereClause;
+		}
+		return  null;
 	}
 
 	protected Predicate visitPredicate(javax.persistence.criteria.Predicate predicate) {
