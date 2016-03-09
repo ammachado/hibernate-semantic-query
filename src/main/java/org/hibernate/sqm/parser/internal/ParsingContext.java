@@ -8,6 +8,7 @@ package org.hibernate.sqm.parser.internal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.sqm.ConsumerContext;
 import org.hibernate.sqm.query.from.FromElement;
@@ -47,5 +48,9 @@ public class ParsingContext {
 
 	public FromElement findElementByUniqueId(String uid) {
 		return globalFromElementMap.get( uid );
+	}
+
+	public Set<String> getElementsUniqueIDs(){
+		return globalFromElementMap.keySet();
 	}
 }

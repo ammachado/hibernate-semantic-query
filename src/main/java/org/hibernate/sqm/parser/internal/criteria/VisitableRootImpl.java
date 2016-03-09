@@ -13,6 +13,7 @@ import javax.persistence.criteria.Selection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by johara on 01/03/16.
@@ -29,23 +30,27 @@ public class VisitableRootImpl<X> implements VisitableExpressionImplementor<X> {
     public org.hibernate.sqm.query.expression.Expression accept(CriteriaVisitor visitor) {
 
         //Lookup UID based on rootImpl
-        FromElement fromElement = visitor.getParsingContext().findElementByUniqueId("<uid:1>");
+        Set<String> uniqueIds = visitor.getParsingContext().getElementsUniqueIDs();
+        if (!uniqueIds.isEmpty()) {
 
-//        RootEntityFromElement rootEntityFromElement = null;
+            final String UID = uniqueIds.iterator().next();
 
-        RootEntityFromElement rootEntityFromElement = new RootEntityFromElement(fromElement.getContainingSpace(),
-                fromElement.getUniqueIdentifier(),
-                rootImpl.getAlias(),
-                (EntityType) fromElement.getAttributeContributingType()
-        );
+            FromElement fromElement = visitor.getParsingContext().findElementByUniqueId(UID);
 
-        List<org.hibernate.sqm.query.select.Selection> selections  = new ArrayList<org.hibernate.sqm.query.select.Selection>();
+            if (fromElement instanceof RootEntityFromElement
+                    && ((RootEntityFromElement) fromElement).getEntityName().equals(this.rootImpl.getJavaType().getTypeName())) {
+                RootEntityFromElement rootEntityFromElement = (RootEntityFromElement) fromElement.getFromElement();
+                List<org.hibernate.sqm.query.select.Selection> selections = new ArrayList<org.hibernate.sqm.query.select.Selection>();
 
-        org.hibernate.sqm.query.select.Selection selection = new org.hibernate.sqm.query.select.Selection(rootEntityFromElement) ;
-        selections.add(selection);
+                org.hibernate.sqm.query.select.Selection selection = new org.hibernate.sqm.query.select.Selection(rootEntityFromElement);
+                selections.add(selection);
 
-        return new SelectClause(false, selections ).getSelections().get(0).getExpression();
-//        return null;
+                return new SelectClause(false, selections).getSelections().get(0).getExpression();
+            }
+
+        }
+
+        return null;
     }
 
     public RootImpl<X> getRootImpl() {
