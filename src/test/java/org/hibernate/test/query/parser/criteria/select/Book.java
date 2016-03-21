@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 /**
  * Created by johara on 23/02/16.
@@ -21,6 +22,9 @@ public class Book {
 
     @ManyToOne
     private Author author;
+
+    @Column
+    BigDecimal price;
 
     public Book() {
     }
@@ -47,5 +51,13 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

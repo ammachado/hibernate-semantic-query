@@ -23,6 +23,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 import javax.persistence.criteria.Subquery;
 
+import org.hibernate.jpa.criteria.expression.ExpressionImpl;
 import org.hibernate.jpa.criteria.path.RootImpl;
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.BasicType;
@@ -232,11 +233,11 @@ public class QuerySpecProcessor implements CriteriaVisitor {
 		}
 		else if ( selection instanceof Root ) {
 			container.add(
-					visitExpression(((javax.persistence.criteria.Expression) new VisitableRootImpl((RootImpl) selection))),
+					visitExpression(new VisitableRootImpl((RootImpl) selection)),
 					interpretAlias(selection.getAlias())
 			);
 		}
-		else if ( selection instanceof Expression ) {
+		else if ( selection instanceof ExpressionImpl) {
 			container.add(
 					visitExpression( (javax.persistence.criteria.Expression) selection ),
 					interpretAlias( selection.getAlias() )

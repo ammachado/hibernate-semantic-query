@@ -1,9 +1,7 @@
 package org.hibernate.sqm.parser.internal.criteria;
 
 import org.hibernate.jpa.criteria.path.RootImpl;
-import org.hibernate.sqm.domain.EntityType;
 import org.hibernate.sqm.query.from.FromElement;
-import org.hibernate.sqm.query.from.FromElementSpace;
 import org.hibernate.sqm.query.from.RootEntityFromElement;
 import org.hibernate.sqm.query.select.SelectClause;
 

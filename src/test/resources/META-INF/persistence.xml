@@ -3,5 +3,6 @@
     <persistence-unit name="Books">
         <class>org.hibernate.test.query.parser.criteria.select.Book</class>
         <class>org.hibernate.test.query.parser.criteria.select.Author</class>
+        <class>org.hibernate.test.query.parser.criteria.select.Country</class>
     </persistence-unit>
 </persistence>

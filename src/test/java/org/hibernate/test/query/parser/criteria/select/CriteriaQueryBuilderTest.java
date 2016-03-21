@@ -1,24 +1,14 @@
 package org.hibernate.test.query.parser.criteria.select;
 
-import junit.framework.Assert;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.xpath.XPath;
-import org.hibernate.hql.internal.ast.tree.SelectExpression;
 import org.hibernate.sqm.SemanticQueryInterpreter;
 import org.hibernate.sqm.domain.DomainMetamodel;
-import org.hibernate.sqm.parser.internal.hql.HqlParseTreeBuilder;
-import org.hibernate.sqm.parser.internal.hql.antlr.HqlParser;
-import org.hibernate.sqm.path.FromElementBinding;
-import org.hibernate.sqm.query.QuerySpec;
 import org.hibernate.sqm.query.SelectStatement;
-import org.hibernate.sqm.query.expression.MapEntryFunction;
 import org.hibernate.sqm.query.from.FromClause;
 import org.hibernate.sqm.query.from.FromElementSpace;
 import org.hibernate.sqm.query.from.RootEntityFromElement;
 import org.hibernate.sqm.query.select.SelectClause;
 import org.hibernate.sqm.query.select.Selection;
 import org.hibernate.test.query.parser.ConsumerContextImpl;
-import org.hibernate.test.sqm.domain.EntityTypeImpl;
 import org.hibernate.test.sqm.domain.ExplicitDomainMetamodel;
 import org.junit.Test;
 
@@ -27,15 +17,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-
-import java.util.Collection;
-
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -66,16 +51,40 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
         q.select(b);
 
-        // Create String path and parameter expressions:
-/*
-        Expression<String> author = b.get("author");
+        SelectStatement criteriaQuerySelect = null;
 
-        ParameterExpression<Integer> p = cb.parameter(Integer.class);
-        q.orderBy( cb.desc( b.get( "id" ) ) );
-        Predicate n2 = cb.isNotNull(author);
+        criteriaQuerySelect = SemanticQueryInterpreter.interpret(q, consumerContext);
 
+        checkStatement(criteriaQuerySelect);
 
-*/
+    }
+
+    @Test
+    public void simpleCriteriaQueryExpressionTest() {
+
+        final String PERSISTENCE_UNIT_NAME = "Books";
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        EntityManager em = factory.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+        CriteriaQuery<Country> q = cb.createQuery(Country.class);
+        Root<Country> c = q.from(Country.class);
+        q.multiselect(c.get("currency"), cb.sum(c.<Integer>get("population")));
+        q.groupBy(c.get("currency"));
+        q.having(cb.gt(cb.count(c), 1));
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//
+//        CriteriaQuery<Book> q = cb.createQuery(Book.class);
+//        Root<Book> b = q.from(Book.class);
+//
+//        q.select(cb.<BigDecimal>sum(b.<BigDecimal>get("population")));
+
+//        q.select(sum.alias("total_price"));
+//
+//        Expression<BigDecimal> sum = cb.sum(b.<BigDecimal>get("Price"));
+
 
         SelectStatement criteriaQuerySelect = null;
 
@@ -171,7 +180,8 @@ public class CriteriaQueryBuilderTest extends CriteriaQueryBuilderAbstractTest {
 
     private DomainMetamodel buildMetamodel() {
         ExplicitDomainMetamodel metamodel = new ExplicitDomainMetamodel();
-        EntityTypeImpl entityType = metamodel.makeEntityType("org.hibernate.test.query.parser.criteria.select.Book");
+        metamodel.makeEntityType("org.hibernate.test.query.parser.criteria.select.Book");
+        metamodel.makeEntityType("org.hibernate.test.query.parser.criteria.select.Country");
         return metamodel;
     }
 
