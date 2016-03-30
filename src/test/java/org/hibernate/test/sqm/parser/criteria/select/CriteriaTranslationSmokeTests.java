@@ -7,7 +7,10 @@
 package org.hibernate.test.sqm.parser.criteria.select;
 
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
 import org.hibernate.sqm.ConsumerContext;
 import org.hibernate.sqm.SemanticQueryInterpreter;
@@ -22,6 +25,7 @@ import org.hibernate.test.sqm.domain.ExplicitDomainMetamodel;
 import org.hibernate.test.sqm.domain.StandardBasicTypeDescriptors;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaQueryImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.PathTypeExpression;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -42,6 +46,26 @@ public class CriteriaTranslationSmokeTests {
 		final CriteriaQueryImpl<Object> criteria = (CriteriaQueryImpl<Object>) criteriaBuilder.createQuery();
 		Root root = criteria.from( "com.acme.Entity2" );
 		criteria.select( root );
+
+		// now ask the interpreter to convert the criteria into SQM...
+		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );
+		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
+	}
+
+	@Test
+	public void ConcatExpressionTest() {
+		final ConsumerContext consumerContext = new ConsumerContextImpl( buildMetamodel() );
+		final CriteriaBuilderImpl criteriaBuilder = new CriteriaBuilderImpl( consumerContext );
+
+		// Build a simple criteria ala `select e from Entity e`
+		final CriteriaQueryImpl<Object> criteria = (CriteriaQueryImpl<Object>) criteriaBuilder.createQuery();
+		Root root = criteria.from( "com.acme.Entity" );
+
+		Expression<String> path  = root.get("basic2");
+
+		Expression<String> c3 = criteriaBuilder.concat("concat ", path);
+
+		criteria.select( c3 );
 
 		// now ask the interpreter to convert the criteria into SQM...
 		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );

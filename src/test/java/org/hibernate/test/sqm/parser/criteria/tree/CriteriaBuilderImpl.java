@@ -39,6 +39,7 @@ import org.hibernate.sqm.NotYetImplementedException;
 import org.hibernate.sqm.query.predicate.RelationalPredicate;
 
 import org.hibernate.test.sqm.parser.criteria.tree.expression.CompoundSelectionImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.ConcatExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ExpressionImplementor;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ParameterExpressionImpl;
@@ -1248,8 +1249,7 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<String> concat(String string1, Expression<String> string2) {
-//		return new ConcatExpression( this, string1, string2 );
-		throw new NotYetImplementedException(  );
+		return new ConcatExpression( this, string1, string2 );
 	}
 
 	@Override
