@@ -52,6 +52,7 @@ public class CriteriaTranslationSmokeTests {
 		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
 	}
 
+/*
 	@Test
 	public void ConcatExpressionTest() {
 		final ConsumerContext consumerContext = new ConsumerContextImpl( buildMetamodel() );
@@ -71,6 +72,7 @@ public class CriteriaTranslationSmokeTests {
 		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );
 		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
 	}
+*/
 
 
 	private DomainMetamodel buildMetamodel() {

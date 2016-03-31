@@ -9,7 +9,6 @@ package org.hibernate.test.sqm.parser.criteria.tree.expression.function;
 import java.io.Serializable;
 
 import org.hibernate.sqm.parser.criteria.spi.CriteriaVisitor;
-import org.hibernate.sqm.query.expression.Expression;
 import org.hibernate.sqm.query.select.AliasedExpressionContainer;
 
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
@@ -24,7 +23,7 @@ public abstract class AbstractFunctionExpression<X>
 		extends ExpressionImpl<X>
 		implements FunctionExpression<X>, Serializable {
 
-	private final String functionName;
+	protected final String functionName;
 
 	public AbstractFunctionExpression(
 			CriteriaBuilderImpl criteriaBuilder,
