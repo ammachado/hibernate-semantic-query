@@ -6,17 +6,14 @@
  */
 package org.hibernate.test.sqm.parser.criteria.tree.expression.function;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.hibernate.sqm.parser.criteria.spi.CriteriaVisitor;
 import org.hibernate.sqm.query.expression.Expression;
 import org.hibernate.sqm.query.select.AliasedExpressionContainer;
-
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
-import org.hibernate.test.sqm.parser.criteria.tree.expression.ExpressionImpl;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Models the basic concept of a SQL function.

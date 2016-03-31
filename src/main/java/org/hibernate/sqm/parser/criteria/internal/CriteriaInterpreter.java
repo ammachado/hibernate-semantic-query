@@ -565,6 +565,11 @@ public class CriteriaInterpreter implements CriteriaVisitor {
 	}
 
 	@Override
+	public FunctionExpression visitFunction(String name, BasicType resultTypeDescriptor) {
+		return visitFunction(name, resultTypeDescriptor, (javax.persistence.criteria.Expression<?>[]) null);
+	}
+
+	@Override
 	public AvgFunction visitAvgFunction(javax.persistence.criteria.Expression expression, boolean distinct) {
 		final Expression sqmExpression = visitExpression( expression );
 		return new AvgFunction(

@@ -8,7 +8,6 @@ package org.hibernate.test.sqm.parser.criteria.tree.expression.function;
 
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 
-import javax.persistence.criteria.Expression;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -43,26 +42,13 @@ public abstract class ParameterizedFunctionExpression<X>
 			"CURRENT_TIMESTAMP"
 	);
 
-	private final List<Expression<?>> argumentExpressions;
 	private final boolean isStandardJpaFunction;
 
 	public ParameterizedFunctionExpression(
 			CriteriaBuilderImpl criteriaBuilder,
 			Class<X> javaType,
-			String functionName,
-			List<Expression<?>> argumentExpressions) {
+			String functionName) {
 		super( criteriaBuilder, javaType, functionName );
-		this.argumentExpressions = argumentExpressions;
-		this.isStandardJpaFunction = STANDARD_JPA_FUNCTION_NAMES.contains( functionName.toUpperCase(Locale.ROOT) );
-	}
-
-	public ParameterizedFunctionExpression(
-			CriteriaBuilderImpl criteriaBuilder,
-			Class<X> javaType,
-			String functionName,
-			Expression<?>... argumentExpressions) {
-		super( criteriaBuilder, javaType, functionName );
-		this.argumentExpressions = Arrays.asList( argumentExpressions );
 		this.isStandardJpaFunction = STANDARD_JPA_FUNCTION_NAMES.contains( functionName.toUpperCase(Locale.ROOT) );
 	}
 
@@ -74,8 +60,5 @@ public abstract class ParameterizedFunctionExpression<X>
 		return number + (int)( number*.75 ) + 1;
 	}
 
-	public List<Expression<?>> getArgumentExpressions() {
-		return argumentExpressions;
-	}
 
 }

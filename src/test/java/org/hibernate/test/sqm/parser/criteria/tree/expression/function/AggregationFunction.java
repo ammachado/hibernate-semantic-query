@@ -8,10 +8,12 @@ package org.hibernate.test.sqm.parser.criteria.tree.expression.function;
 
 import org.hibernate.sqm.parser.criteria.spi.CriteriaVisitor;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.UnexpectedNumberExpressionsException;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
 
 import javax.persistence.criteria.Expression;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Models SQL aggregation functions (<tt>MIN</tt>, <tt>MAX</tt>, <tt>COUNT</tt>, etc).
@@ -19,7 +21,7 @@ import java.io.Serializable;
  * @author Steve Ebersole
  */
 public abstract class AggregationFunction<T>
-		extends ParameterizedFunctionExpression<T>
+		extends SingularParameterizedFunctionExpression<T>
 		implements Serializable {
 
 	/**
@@ -87,10 +89,10 @@ public abstract class AggregationFunction<T>
 
 		@Override
 		public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
-			return visitor.visitFunction(
-					COUNT_NAME,
-					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+			return visitor.visitCountFunction(
+					getArgumentExpression(),
+					false,
+					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() )
 			);
 		}
 	}
@@ -109,11 +111,12 @@ public abstract class AggregationFunction<T>
 
 		@Override
 		public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
-			return visitor.visitFunction(
-					AVG_NAME,
-					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
-			);
+
+            return visitor.visitAvgFunction(
+                    getArgumentExpression(),
+				    false,
+					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType(getJavaType())
+            );
 		}
 	}
 
@@ -141,10 +144,10 @@ public abstract class AggregationFunction<T>
 
 		@Override
 		public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
-			return visitor.visitFunction(
-					SUM_NAME,
-					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+			return visitor.visitSumFunction(
+                    getArgumentExpression(),
+					false,
+                    criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() )
 			);
 		}
 	}
@@ -165,10 +168,10 @@ public abstract class AggregationFunction<T>
 
 		@Override
 		public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
-			return visitor.visitFunction(
-					MIN_NAME,
-					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+			return visitor.visitMinFunction(
+                    getArgumentExpression(),
+					false,
+                    criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() )
 			);
 		}
 	}
@@ -189,10 +192,10 @@ public abstract class AggregationFunction<T>
 
 		@Override
 		public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
-			return visitor.visitFunction(
-					MAX_NAME,
-					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+			return visitor.visitMaxFunction(
+                    getArgumentExpression(),
+                    false,
+                    criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() )
 			);
 		}
 	}
@@ -215,7 +218,7 @@ public abstract class AggregationFunction<T>
 			return visitor.visitFunction(
 					LEAST_NAME,
 					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+					getArgumentExpression()
 			);
 		}
 	}
@@ -238,7 +241,7 @@ public abstract class AggregationFunction<T>
 			return visitor.visitFunction(
 					GREATEST_NAME,
 					criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-					getArgumentExpressions()
+					getArgumentExpression()
 			);
 		}
 	}

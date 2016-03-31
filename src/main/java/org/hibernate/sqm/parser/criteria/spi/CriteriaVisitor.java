@@ -87,6 +87,7 @@ public interface CriteriaVisitor {
 
 	FunctionExpression visitFunction(String name, BasicType resultTypeDescriptor, List<javax.persistence.criteria.Expression<?>> expressions);
 	FunctionExpression visitFunction(String name, BasicType resultTypeDescriptor, javax.persistence.criteria.Expression<?>... expressions);
+	FunctionExpression visitFunction(String name, BasicType resultTypeDescriptor);
 
 	AvgFunction visitAvgFunction(javax.persistence.criteria.Expression expression, boolean distinct);
 	AvgFunction visitAvgFunction(javax.persistence.criteria.Expression expression, boolean distinct, BasicType resultType);

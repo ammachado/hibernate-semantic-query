@@ -43,7 +43,12 @@ import org.hibernate.test.sqm.parser.criteria.tree.expression.ConcatExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ExpressionImplementor;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ParameterExpressionImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AbsFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AggregationFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.CurrentDateFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.GenericFunctionExpression;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.LengthFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.LocateFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.BooleanExpressionPredicate;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.ComparisonPredicate;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.CompoundPredicate;
@@ -562,64 +567,54 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public <N extends Number> Expression<Double> avg(Expression<N> x) {
-//		return new AggregationFunction.AVG( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.AVG( this, x );
 	}
 
 	@Override
 	public <N extends Number> Expression<N> sum(Expression<N> x) {
-//		return new AggregationFunction.SUM<N>( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.SUM<N>( this, x );
 	}
 
 	@Override
 	public Expression<Long> sumAsLong(Expression<Integer> x) {
-//		return new AggregationFunction.SUM<Long>( this, x, Long.class );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.SUM<Long>( this, x, Long.class );
 	}
 
 	@Override
 	public Expression<Double> sumAsDouble(Expression<Float> x) {
-//		return new AggregationFunction.SUM<Double>( this, x, Double.class );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.SUM<Double>( this, x, Double.class );
 	}
 
 	@Override
 	public <N extends Number> Expression<N> max(Expression<N> x) {
-//		return new AggregationFunction.MAX<N>( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.MAX<N>( this, x );
 	}
 
 	@Override
 	public <N extends Number> Expression<N> min(Expression<N> x) {
-//		return new AggregationFunction.MIN<N>( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.MIN<N>( this, x );
 	}
 
 	@Override
 	@SuppressWarnings({ "unchecked" })
 	public <X extends Comparable<? super X>> Expression<X> greatest(Expression<X> x) {
-//		return new AggregationFunction.GREATEST( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.GREATEST( this, x );
 	}
 
 	@Override
 	@SuppressWarnings({ "unchecked" })
 	public <X extends Comparable<? super X>> Expression<X> least(Expression<X> x) {
-//		return new AggregationFunction.LEAST( this, x );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.LEAST( this, x );
 	}
 
 	@Override
 	public Expression<Long> count(Expression<?> x) {
-//		return new AggregationFunction.COUNT( this, x, false );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.COUNT( this, x, false );
 	}
 
 	@Override
 	public Expression<Long> countDistinct(Expression<?> x) {
-//		return new AggregationFunction.COUNT( this, x, true );
-		throw new NotYetImplementedException(  );
+		return new AggregationFunction.COUNT( this, x, true );
 	}
 
 
@@ -649,8 +644,7 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public <N extends Number> Expression<N> abs(Expression<N> expression) {
-//		return new AbsFunction<N>( this, expression );
-		throw new NotYetImplementedException(  );
+		return new AbsFunction<N>( this, expression );
 	}
 
 	@Override
@@ -661,8 +655,7 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<java.sql.Date> currentDate() {
-//		return new CurrentDateFunction( this );
-		throw new NotYetImplementedException(  );
+		return new CurrentDateFunction( this );
 	}
 
 	@Override
@@ -751,14 +744,12 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<Integer> length(Expression<String> value) {
-//		return new LengthFunction( this, value );
-		throw new NotYetImplementedException(  );
+		return new LengthFunction( this, value );
 	}
 
 	@Override
 	public Expression<Integer> locate(Expression<String> string, Expression<String> pattern) {
-//		return new LocateFunction( this, pattern, string );
-		throw new NotYetImplementedException(  );
+		return new LocateFunction( this, pattern, string );
 	}
 
 	@Override
@@ -1237,14 +1228,12 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<String> concat(Expression<String> string1, Expression<String> string2) {
-//		return new ConcatExpression( this, string1, string2 );
-		throw new NotYetImplementedException(  );
+		return new ConcatExpression( this, string1, string2 );
 	}
 
 	@Override
 	public Expression<String> concat(Expression<String> string1, String string2) {
-//		return new ConcatExpression( this, string1, string2 );
-		throw new NotYetImplementedException(  );
+		return new ConcatExpression( this, string1, string2 );
 	}
 
 	@Override
