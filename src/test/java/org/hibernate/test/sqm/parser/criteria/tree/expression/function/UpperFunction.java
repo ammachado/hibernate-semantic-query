@@ -6,6 +6,7 @@
  */
 package org.hibernate.test.sqm.parser.criteria.tree.expression.function;
 
+
 import org.hibernate.sqm.parser.criteria.spi.CriteriaVisitor;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 
@@ -13,32 +14,33 @@ import javax.persistence.criteria.Expression;
 import java.io.Serializable;
 
 /**
- * Models the ANSI SQL <tt>LENGTH</tt> function.
+ * Models the ANSI SQL <tt>UPPER</tt> function.
  *
  * @author Steve Ebersole
  */
-public class LengthFunction
-		extends ParameterizedFunctionExpression<Integer>
+public class UpperFunction
+		extends ParameterizedFunctionExpression<String>
 		implements Serializable {
-	public static final String LENGTH_NAME = "length";
-
+	public static final String UPPER_NAME = "upper";
 	private final Expression<String> expression;
+
+	public UpperFunction(CriteriaBuilderImpl criteriaBuilder, Expression<String> expression) {
+		super( criteriaBuilder, String.class, UPPER_NAME);
+		this.expression = expression;
+	}
+
 	@Override
 	protected boolean isStandardJpaFunction() {
 		return true;
 	}
 
-	public LengthFunction(CriteriaBuilderImpl criteriaBuilder, Expression<String> expression) {
-		super( criteriaBuilder, Integer.class,  LENGTH_NAME );
-		this.expression = expression;
-	}
-
 	@Override
 	public org.hibernate.sqm.query.expression.Expression visitExpression(CriteriaVisitor visitor) {
 		return visitor.visitFunction(
-				LENGTH_NAME,
+				UPPER_NAME,
 				criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
 				this.expression
 		);
+
 	}
 }
