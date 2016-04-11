@@ -18,6 +18,7 @@ import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.expression.AttributeReferenceExpression;
 import org.hibernate.sqm.query.expression.AvgFunction;
 import org.hibernate.sqm.query.expression.BinaryArithmeticExpression;
+import org.hibernate.sqm.query.expression.CaseSimpleExpression;
 import org.hibernate.sqm.query.expression.ConcatExpression;
 import org.hibernate.sqm.query.expression.ConstantEnumExpression;
 import org.hibernate.sqm.query.expression.ConstantFieldExpression;
@@ -106,6 +107,8 @@ public interface CriteriaVisitor {
 
 	SumFunction visitSumFunction(javax.persistence.criteria.Expression expression, boolean distinct);
 	SumFunction visitSumFunction(javax.persistence.criteria.Expression expression, boolean distinct, BasicType resultType);
+
+	CaseSimpleExpression visitCase(javax.persistence.criteria.Expression expression);
 
 	ConcatExpression visitConcat(
 			javax.persistence.criteria.Expression expression1,

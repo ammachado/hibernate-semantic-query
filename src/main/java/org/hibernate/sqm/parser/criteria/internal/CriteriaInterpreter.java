@@ -49,6 +49,7 @@ import org.hibernate.sqm.query.SelectStatement;
 import org.hibernate.sqm.query.expression.AttributeReferenceExpression;
 import org.hibernate.sqm.query.expression.AvgFunction;
 import org.hibernate.sqm.query.expression.BinaryArithmeticExpression;
+import org.hibernate.sqm.query.expression.CaseSimpleExpression;
 import org.hibernate.sqm.query.expression.ConcatExpression;
 import org.hibernate.sqm.query.expression.ConstantEnumExpression;
 import org.hibernate.sqm.query.expression.ConstantFieldExpression;
@@ -650,6 +651,11 @@ public class CriteriaInterpreter implements CriteriaVisitor {
 	@Override
 	public SumFunction visitSumFunction(javax.persistence.criteria.Expression expression, boolean distinct, BasicType resultType) {
 		return new SumFunction( visitExpression( expression ), distinct, resultType );
+	}
+
+	@Override
+	public CaseSimpleExpression visitCase(javax.persistence.criteria.Expression expression) {
+		return new CaseSimpleExpression(visitExpression( expression ));
 	}
 
 	@Override
