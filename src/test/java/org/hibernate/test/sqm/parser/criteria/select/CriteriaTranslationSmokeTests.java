@@ -75,8 +75,8 @@ public class CriteriaTranslationSmokeTests {
 		Expression<String> jpa = criteriaBuilder.literal("JPA");
 
 		// Date and Time literals:
-//		Expression<java.sql.Date> today = criteriaBuilder.literal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-//		Expression<java.sql.Time> time = criteriaBuilder.literal(new java.sql.Time(Calendar.getInstance().getTime().getTime()));
+		Expression<java.sql.Date> today = criteriaBuilder.literal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+		Expression<java.sql.Time> time = criteriaBuilder.literal(new java.sql.Time(Calendar.getInstance().getTime().getTime()));
 //		Expression<java.sql.Timestamp> now = criteriaBuilder.literal(new java.sql.Timestamp());
 
 //		// Enum literal:
@@ -96,15 +96,13 @@ public class CriteriaTranslationSmokeTests {
 		// Build a simple criteria ala `select e from Entity e`
 		final CriteriaQueryImpl<Object> criteria = (CriteriaQueryImpl<Object>) criteriaBuilder.createQuery();
 		Root root = criteria.from( "com.acme.Entity2" );
-//		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, root);
-		criteria.multiselect( t, f, i1, i2, d, empty, jpa, root);
+		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, root);
 
 		// now ask the interpreter to convert the criteria into SQM...
 		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );
 		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
 		SelectClause selectClause = sqm.getQuerySpec().getSelectClause();
-		assertThat( selectClause.getSelections().size(), is(8) ) ;
-		assertSame();
+		assertThat( selectClause.getSelections().size(), is(10) ) ;
 	}
 
 /*

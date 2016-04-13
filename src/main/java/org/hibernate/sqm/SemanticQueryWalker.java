@@ -31,6 +31,7 @@ import org.hibernate.sqm.query.expression.FunctionExpression;
 import org.hibernate.sqm.query.expression.LiteralBigDecimalExpression;
 import org.hibernate.sqm.query.expression.LiteralBigIntegerExpression;
 import org.hibernate.sqm.query.expression.LiteralCharacterExpression;
+import org.hibernate.sqm.query.expression.LiteralDateExpression;
 import org.hibernate.sqm.query.expression.LiteralDoubleExpression;
 import org.hibernate.sqm.query.expression.LiteralFalseExpression;
 import org.hibernate.sqm.query.expression.LiteralFloatExpression;
@@ -232,4 +233,6 @@ public interface SemanticQueryWalker<T> {
 	T visitCoalesceExpression(CoalesceExpression expression);
 
 	T visitNullifExpression(NullifExpression expression);
+
+	T visitLiteralDateExpression(LiteralDateExpression expression);
 }

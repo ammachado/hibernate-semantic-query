@@ -32,6 +32,7 @@ import org.hibernate.sqm.query.expression.FunctionExpression;
 import org.hibernate.sqm.query.expression.LiteralBigDecimalExpression;
 import org.hibernate.sqm.query.expression.LiteralBigIntegerExpression;
 import org.hibernate.sqm.query.expression.LiteralCharacterExpression;
+import org.hibernate.sqm.query.expression.LiteralDateExpression;
 import org.hibernate.sqm.query.expression.LiteralDoubleExpression;
 import org.hibernate.sqm.query.expression.LiteralFalseExpression;
 import org.hibernate.sqm.query.expression.LiteralFloatExpression;
@@ -520,6 +521,11 @@ public class BaseSemanticQueryWalker<T> implements SemanticQueryWalker<T> {
 
 	@Override
 	public T visitNullifExpression(NullifExpression expression) {
+		return (T) expression;
+	}
+
+	@Override
+	public T visitLiteralDateExpression(LiteralDateExpression expression) {
 		return (T) expression;
 	}
 }

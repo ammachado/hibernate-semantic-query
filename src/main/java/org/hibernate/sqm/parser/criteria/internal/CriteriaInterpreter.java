@@ -9,6 +9,7 @@ package org.hibernate.sqm.parser.criteria.internal;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -61,6 +62,7 @@ import org.hibernate.sqm.query.expression.FunctionExpression;
 import org.hibernate.sqm.query.expression.LiteralBigDecimalExpression;
 import org.hibernate.sqm.query.expression.LiteralBigIntegerExpression;
 import org.hibernate.sqm.query.expression.LiteralCharacterExpression;
+import org.hibernate.sqm.query.expression.LiteralDateExpression;
 import org.hibernate.sqm.query.expression.LiteralDoubleExpression;
 import org.hibernate.sqm.query.expression.LiteralExpression;
 import org.hibernate.sqm.query.expression.LiteralFalseExpression;
@@ -400,6 +402,12 @@ public class CriteriaInterpreter implements CriteriaVisitor {
 			return (LiteralExpression<T>) new LiteralStringExpression(
 					(String) value,
 					(BasicType<String>) typeDescriptor
+			);
+		}
+		else if ( Date.class.isAssignableFrom( typeDescriptor.getJavaType() ) ) {
+			return (LiteralExpression<T>) new LiteralDateExpression(
+					(Date) value,
+					(BasicType<Date>) typeDescriptor
 			);
 		}
 
