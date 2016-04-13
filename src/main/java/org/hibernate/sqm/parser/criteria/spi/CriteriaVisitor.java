@@ -170,4 +170,6 @@ public interface CriteriaVisitor {
 	BooleanExpressionPredicate visitBooleanExpressionPredicate(javax.persistence.criteria.Expression<Boolean> expression);
 
 	Expression visitRoot(RootImplementor root);
+
+	Expression visitNullLiteral();
 }

@@ -42,6 +42,7 @@ import org.hibernate.test.sqm.parser.criteria.tree.expression.CompoundSelectionI
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ConcatExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ExpressionImplementor;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.NullLiteralExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ParameterExpressionImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AbsFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AggregationFunction;
@@ -558,8 +559,8 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public <T> Expression<T> nullLiteral(Class<T> resultClass) {
-//		return new NullLiteralExpression<T>( this, resultClass );
-		throw new NotYetImplementedException(  );
+		return new NullLiteralExpression<T>( this, resultClass );
+//		throw new NotYetImplementedException(  );
 	}
 
 

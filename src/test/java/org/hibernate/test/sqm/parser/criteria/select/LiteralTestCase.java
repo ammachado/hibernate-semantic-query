@@ -6,39 +6,30 @@
  */
 package org.hibernate.test.sqm.parser.criteria.select;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
-
 import org.hibernate.sqm.ConsumerContext;
 import org.hibernate.sqm.SemanticQueryInterpreter;
 import org.hibernate.sqm.domain.DomainMetamodel;
 import org.hibernate.sqm.domain.SingularAttribute;
-import org.hibernate.sqm.parser.hql.internal.SemanticQueryBuilder;
 import org.hibernate.sqm.query.SelectStatement;
-
-import org.hibernate.sqm.query.select.SelectClause;
 import org.hibernate.test.sqm.ConsumerContextImpl;
 import org.hibernate.test.sqm.domain.EntityTypeImpl;
 import org.hibernate.test.sqm.domain.ExplicitDomainMetamodel;
 import org.hibernate.test.sqm.domain.StandardBasicTypeDescriptors;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaQueryImpl;
-import org.hibernate.test.sqm.parser.criteria.tree.expression.PathTypeExpression;
 import org.junit.Test;
 
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 import java.util.Calendar;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 
 /**
  * @author Steve Ebersole
  */
-public class CriteriaTranslationSmokeTests {
+public class LiteralTestCase {
 
 
 	@Test
@@ -75,8 +66,8 @@ public class CriteriaTranslationSmokeTests {
 		Expression<String> jpa = criteriaBuilder.literal("JPA");
 
 		// Date and Time literals:
-//		Expression<java.sql.Date> today = criteriaBuilder.literal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-//		Expression<java.sql.Time> time = criteriaBuilder.literal(new java.sql.Time(Calendar.getInstance().getTime().getTime()));
+		Expression<java.sql.Date> today = criteriaBuilder.literal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+		Expression<java.sql.Time> time = criteriaBuilder.literal(new java.sql.Time(Calendar.getInstance().getTime().getTime()));
 //		Expression<java.sql.Timestamp> now = criteriaBuilder.literal(new java.sql.Timestamp());
 
 //		// Enum literal:
@@ -96,15 +87,11 @@ public class CriteriaTranslationSmokeTests {
 		// Build a simple criteria ala `select e from Entity e`
 		final CriteriaQueryImpl<Object> criteria = (CriteriaQueryImpl<Object>) criteriaBuilder.createQuery();
 		Root root = criteria.from( "com.acme.Entity2" );
-//		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, root);
-		criteria.multiselect( t, f, i1, i2, d, empty, jpa, root);
+		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, root);
 
 		// now ask the interpreter to convert the criteria into SQM...
 		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );
 		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
-		SelectClause selectClause = sqm.getQuerySpec().getSelectClause();
-		assertThat( selectClause.getSelections().size(), is(8) ) ;
-		assertSame();
 	}
 
 /*

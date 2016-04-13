@@ -875,4 +875,9 @@ public class CriteriaInterpreter implements CriteriaVisitor {
 
 		return fromElement;
 	}
+
+	@Override
+	public Expression visitNullLiteral() {
+		throw new NotYetImplementedException();
+	}
 }

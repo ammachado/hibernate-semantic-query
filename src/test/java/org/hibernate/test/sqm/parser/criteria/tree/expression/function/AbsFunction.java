@@ -21,10 +21,12 @@ public class AbsFunction<N extends Number>
 		extends ParameterizedFunctionExpression<N>
 		implements Serializable {
 
+	private final Expression expression;
 	public static final String ABS_NAME = "abs";
 
 	public AbsFunction(CriteriaBuilderImpl criteriaBuilder, Expression expression) {
-		super( criteriaBuilder, expression.getJavaType(), ABS_NAME, expression );
+		super( criteriaBuilder, expression.getJavaType(), ABS_NAME);
+		this.expression = expression;
 	}
 
 	@Override
@@ -37,7 +39,7 @@ public class AbsFunction<N extends Number>
 		return visitor.visitFunction(
 				ABS_NAME,
 				criteriaBuilder().consumerContext().getDomainMetamodel().getBasicType( getJavaType() ),
-				getArgumentExpressions()
+				this.expression
 		);
 	}
 }
