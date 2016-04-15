@@ -44,12 +44,18 @@ import org.hibernate.test.sqm.parser.criteria.tree.expression.ExpressionImplemen
 import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.NullLiteralExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.ParameterExpressionImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.UnaryArithmeticOperation;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AbsFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.AggregationFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.CurrentDateFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.CurrentTimeFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.GenericFunctionExpression;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.LengthFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.expression.function.LocateFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.LowerFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.SubstringFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.TrimFunction;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.function.UpperFunction;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.BooleanExpressionPredicate;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.ComparisonPredicate;
 import org.hibernate.test.sqm.parser.criteria.tree.predicate.CompoundPredicate;
@@ -667,80 +673,67 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<java.sql.Time> currentTime() {
-//		return new CurrentTimeFunction( this );
-		throw new NotYetImplementedException(  );
+		return new CurrentTimeFunction( this );
 	}
 
 	@Override
 	public Expression<String> substring(Expression<String> value, Expression<Integer> start) {
-//		return new SubstringFunction( this, value, start );
-		throw new NotYetImplementedException(  );
+		return new SubstringFunction( this, value, start );
 	}
 
 	@Override
 	public Expression<String> substring(Expression<String> value, int start) {
-//		return new SubstringFunction( this, value, start );
-		throw new NotYetImplementedException(  );
+		return new SubstringFunction( this, value, start );
 	}
 
 	@Override
 	public Expression<String> substring(Expression<String> value, Expression<Integer> start, Expression<Integer> length) {
-//		return new SubstringFunction( this, value, start, length );
-		throw new NotYetImplementedException(  );
+		return new SubstringFunction( this, value, start, length );
 	}
 
 	@Override
 	public Expression<String> substring(Expression<String> value, int start, int length) {
-//		return new SubstringFunction( this, value, start, length );
-		throw new NotYetImplementedException(  );
+		return new SubstringFunction( this, value, start, length );
 	}
 
 	@Override
 	public Expression<String> trim(Expression<String> trimSource ) {
-//		return new TrimFunction( this, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimSource );
 	}
 
 	@Override
 	public Expression<String> trim(Trimspec trimspec, Expression<String> trimSource) {
-//		return new TrimFunction( this, trimspec, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimspec, trimSource );
 	}
 
 	@Override
 	public Expression<String> trim(Expression<Character> trimCharacter, Expression<String> trimSource) {
-//		return new TrimFunction( this, trimCharacter, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimCharacter, trimSource );
 	}
 
 	@Override
 	public Expression<String> trim(Trimspec trimspec, Expression<Character> trimCharacter, Expression<String> trimSource) {
-//		return new TrimFunction( this, trimspec, trimCharacter, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimspec, trimCharacter, trimSource );
 	}
 
 	@Override
 	public Expression<String> trim(char trimCharacter, Expression<String> trimSource) {
-//		return new TrimFunction( this, trimCharacter, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimCharacter, trimSource );
 	}
 
 	@Override
 	public Expression<String> trim(Trimspec trimspec, char trimCharacter, Expression<String> trimSource) {
-//		return new TrimFunction( this, trimspec, trimCharacter, trimSource );
-		throw new NotYetImplementedException(  );
+		return new TrimFunction( this, trimspec, trimCharacter, trimSource );
 	}
 
 	@Override
 	public Expression<String> lower(Expression<String> value) {
-//		return new LowerFunction( this, value );
-		throw new NotYetImplementedException(  );
+		return new LowerFunction( this, value );
 	}
 
 	@Override
 	public Expression<String> upper(Expression<String> value) {
-//		return new UpperFunction( this, value );
-		throw new NotYetImplementedException(  );
+		return new UpperFunction( this, value );
 	}
 
 	@Override
@@ -755,20 +748,17 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public Expression<Integer> locate(Expression<String> string, Expression<String> pattern, Expression<Integer> start) {
-//		return new LocateFunction( this, pattern, string, start );
-		throw new NotYetImplementedException(  );
+		return new LocateFunction( this, pattern, string, start );
 	}
 
 	@Override
 	public Expression<Integer> locate(Expression<String> string, String pattern) {
-//		return new LocateFunction( this, pattern, string );
-		throw new NotYetImplementedException(  );
+		return new LocateFunction( this, pattern, string );
 	}
 
 	@Override
 	public Expression<Integer> locate(Expression<String> string, String pattern, int start) {
-//		return new LocateFunction( this, pattern, string, start );
-		throw new NotYetImplementedException(  );
+		return new LocateFunction( this, pattern, string, start );
 	}
 
 
@@ -776,12 +766,11 @@ public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 
 	@Override
 	public <N extends Number> Expression<N> neg(Expression<N> expression) {
-//		return new UnaryArithmeticOperation<N>(
-//				this,
-//				UnaryArithmeticOperation.Operation.UNARY_MINUS,
-//				expression
-//		);
-		throw new NotYetImplementedException(  );
+		return new UnaryArithmeticOperation<N>(
+				this,
+				UnaryArithmeticOperation.Operation.UNARY_MINUS,
+				expression
+		);
 	}
 
 	@Override
