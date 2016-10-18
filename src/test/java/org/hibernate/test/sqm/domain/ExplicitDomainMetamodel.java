@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.sqm.domain.BasicType;
 import org.hibernate.sqm.domain.DomainMetamodel;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.IdentifiableType;
 
 /**
@@ -122,7 +122,7 @@ public class ExplicitDomainMetamodel implements DomainMetamodel {
 	}
 
 	@Override
-	public EntityType resolveEntityType(Class javaType) {
+	public SQMEntityType resolveEntityType(Class javaType) {
 		final EntityTypeImpl entityType = entityTypeMap.get( javaType.getName() );
 		if ( entityType == null ) {
 			throw new IllegalArgumentException( "Per JPA spec" );
@@ -131,7 +131,7 @@ public class ExplicitDomainMetamodel implements DomainMetamodel {
 	}
 
 	@Override
-	public EntityType resolveEntityType(String name) {
+	public SQMEntityType resolveEntityType(String name) {
 		if ( importMap.containsKey( name ) ) {
 			name = importMap.get( name );
 		}

@@ -14,6 +14,6 @@ import java.util.Collection;
  *
  * @author Steve Ebersole
  */
-public interface PolymorphicEntityType<T> extends EntityType {
-	Collection<EntityType> getImplementors();
+public interface PolymorphicEntityType<T> extends SQMEntityType {
+	Collection<SQMEntityType> getImplementors();
 }

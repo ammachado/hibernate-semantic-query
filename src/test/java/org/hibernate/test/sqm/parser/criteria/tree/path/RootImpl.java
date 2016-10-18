@@ -6,33 +6,32 @@
  */
 package org.hibernate.test.sqm.parser.criteria.tree.path;
 
-import java.io.Serializable;
-import javax.persistence.criteria.Root;
-
-import org.hibernate.sqm.domain.EntityType;
-import org.hibernate.sqm.parser.common.ImplicitAliasGenerator;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.parser.criteria.spi.CriteriaVisitor;
 import org.hibernate.sqm.parser.criteria.spi.path.RootImplementor;
 import org.hibernate.sqm.query.expression.Expression;
 import org.hibernate.sqm.query.select.AliasedExpressionContainer;
-
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.PathSource;
+
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import java.io.Serializable;
 
 /**
  * Hibernate implementation of the JPA {@link Root} contract
  *
  * @author Steve Ebersole
  */
-public class RootImpl<X> extends AbstractFromImpl<X,X> implements RootImplementor<X>, Serializable {
-	private final EntityType entityType;
+	public class RootImpl<X> extends AbstractFromImpl<X,X> implements RootImplementor<X>, Serializable {
+	private final SQMEntityType<X> entityType;
 	private final boolean allowJoins;
 
-	public RootImpl(CriteriaBuilderImpl criteriaBuilder, EntityType entityType) {
-		this( criteriaBuilder, entityType, true );
+	public RootImpl(CriteriaBuilderImpl criteriaBuilder, EntityType<X> entityType) {
+		this( criteriaBuilder, (SQMEntityType) entityType, true );
 	}
 
-	public RootImpl(CriteriaBuilderImpl criteriaBuilder, EntityType entityType, boolean allowJoins) {
+	public RootImpl(CriteriaBuilderImpl criteriaBuilder, SQMEntityType entityType, boolean allowJoins) {
 //		super( criteriaBuilder, entityType.getJavaType() );
 		super( criteriaBuilder, null );
 		this.entityType = entityType;
@@ -40,13 +39,14 @@ public class RootImpl<X> extends AbstractFromImpl<X,X> implements RootImplemento
 	}
 
 	@Override
-	public EntityType getEntityType() {
+	public SQMEntityType getEntityType() {
 		return entityType;
 	}
 
 	@Override
 	public javax.persistence.metamodel.EntityType<X> getModel() {
-		throw new UnsupportedOperationException(  );
+//		throw new UnsupportedOperationException(  );
+		return (EntityType) getMappedEntityType();
 	}
 
 	@Override
@@ -94,6 +94,10 @@ public class RootImpl<X> extends AbstractFromImpl<X,X> implements RootImplemento
 	@Override
 	public void visitSelections(CriteriaVisitor visitor, AliasedExpressionContainer container) {
 		container.add( visitExpression( visitor ), getAlias() );
+	}
+
+	public javax.persistence.metamodel.EntityType<X> getMappedEntityType() {
+		return (javax.persistence.metamodel.EntityType<X>) entityType;
 	}
 
 	public static class TreatedRoot<T> extends RootImpl<T> {

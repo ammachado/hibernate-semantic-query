@@ -8,7 +8,7 @@ package org.hibernate.sqm.query.from;
 
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.query.JoinType;
 import org.hibernate.sqm.query.predicate.Predicate;
 
@@ -26,7 +26,7 @@ public class QualifiedEntityJoinFromElement
 			FromElementSpace fromElementSpace,
 			String uid,
 			String alias,
-			EntityType joinedEntityDescriptor,
+			SQMEntityType joinedEntityDescriptor,
 			JoinType joinType) {
 		super( fromElementSpace, uid, alias, joinedEntityDescriptor, joinedEntityDescriptor, alias, joinType );
 		this.entityName = joinedEntityDescriptor.getName();
@@ -37,8 +37,8 @@ public class QualifiedEntityJoinFromElement
 	}
 
 	@Override
-	public EntityType getBoundModelType() {
-		return (EntityType) super.getBoundModelType();
+	public SQMEntityType getBoundModelType() {
+		return (SQMEntityType) super.getBoundModelType();
 	}
 
 	@Override

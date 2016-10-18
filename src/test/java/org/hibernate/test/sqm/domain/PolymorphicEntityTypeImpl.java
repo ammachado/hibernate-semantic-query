@@ -11,14 +11,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.PolymorphicEntityType;
 
 /**
  * @author Steve Ebersole
  */
 public class PolymorphicEntityTypeImpl extends EntityTypeImpl implements PolymorphicEntityType {
-	private List<EntityType> implementors = new ArrayList<EntityType>();
+	private List<SQMEntityType> implementors = new ArrayList<SQMEntityType>();
 
 	public PolymorphicEntityTypeImpl(Class javaType) {
 		super( javaType, null );
@@ -29,7 +29,7 @@ public class PolymorphicEntityTypeImpl extends EntityTypeImpl implements Polymor
 	}
 
 	@Override
-	public Collection<EntityType> getImplementors() {
+	public Collection<SQMEntityType> getImplementors() {
 		return implementors;
 	}
 
@@ -44,7 +44,7 @@ public class PolymorphicEntityTypeImpl extends EntityTypeImpl implements Polymor
 		EntityTypeImpl firstImplementor = (EntityTypeImpl) implementors.get( 0 );
 		attr_loop:
 		for ( Attribute attribute : firstImplementor.getAttributesByName().values() ) {
-			for ( EntityType implementor : implementors ) {
+			for ( SQMEntityType implementor : implementors ) {
 				// NOTE : according to JPA the lookup here should throw an exception rather than return null
 				// so we either need to adjust this expectation (in main code too) or go back to our own model
 				if ( implementor.findAttribute( attribute.getName() ) == null ) {

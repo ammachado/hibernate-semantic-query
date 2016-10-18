@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.hibernate.sqm.domain.BasicType;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.PluralAttribute;
 import org.hibernate.sqm.domain.PolymorphicEntityType;
 import org.hibernate.sqm.domain.Type;
@@ -562,7 +562,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 	}
 
 	protected RootEntityFromElement resolveDmlRootEntityReference(HqlParser.MainEntityPersisterReferenceContext rootEntityContext) {
-		final EntityType entityType = resolveEntityReference( rootEntityContext.dotIdentifierSequence() );
+		final SQMEntityType entityType = resolveEntityReference( rootEntityContext.dotIdentifierSequence() );
 		String alias = interpretIdentificationVariable( rootEntityContext.identificationVariableDef() );
 		if ( alias == null ) {
 			alias = parsingContext.getImplicitAliasGenerator().buildUniqueImplicitAlias();
@@ -654,7 +654,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 	public InsertSelectStatement visitInsertStatement(HqlParser.InsertStatementContext ctx) {
 		currentQuerySpecProcessingState = new QuerySpecProcessingStateDmlImpl( parsingContext );
 		try {
-			final EntityType entityType = resolveEntityReference( ctx.insertSpec().intoSpec().dotIdentifierSequence() );
+			final SQMEntityType entityType = resolveEntityReference( ctx.insertSpec().intoSpec().dotIdentifierSequence() );
 			String alias = parsingContext.getImplicitAliasGenerator().buildUniqueImplicitAlias();
 			log.debugf(
 					"Generated implicit alias [%s] for INSERT target [%s]",
@@ -725,7 +725,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 
 	@Override
 	public RootEntityFromElement visitFromElementSpaceRoot(HqlParser.FromElementSpaceRootContext ctx) {
-		final EntityType entityType = resolveEntityReference(
+		final SQMEntityType entityType = resolveEntityReference(
 				ctx.mainEntityPersisterReference().dotIdentifierSequence()
 		);
 
@@ -748,9 +748,9 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 		);
 	}
 
-	private EntityType resolveEntityReference(HqlParser.DotIdentifierSequenceContext dotIdentifierSequenceContext) {
+	private SQMEntityType resolveEntityReference(HqlParser.DotIdentifierSequenceContext dotIdentifierSequenceContext) {
 		final String entityName = dotIdentifierSequenceContext.getText();
-		final EntityType entityTypeDescriptor = parsingContext.getConsumerContext()
+		final SQMEntityType entityTypeDescriptor = parsingContext.getConsumerContext()
 				.getDomainMetamodel()
 				.resolveEntityType( entityName );
 		if ( entityTypeDescriptor == null ) {
@@ -761,7 +761,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 
 	@Override
 	public CrossJoinedFromElement visitCrossJoin(HqlParser.CrossJoinContext ctx) {
-		final EntityType entityType = resolveEntityReference(
+		final SQMEntityType entityType = resolveEntityReference(
 				ctx.mainEntityPersisterReference().dotIdentifierSequence()
 		);
 
@@ -1193,7 +1193,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 		final String pathText = ctx.getText();
 
 		try {
-			final EntityType entityType = parsingContext.getConsumerContext().getDomainMetamodel().resolveEntityType( pathText );
+			final SQMEntityType entityType = parsingContext.getConsumerContext().getDomainMetamodel().resolveEntityType( pathText );
 			if ( entityType != null ) {
 				return new EntityTypeExpression( entityType );
 			}
@@ -1393,7 +1393,7 @@ public class SemanticQueryBuilder extends HqlParserBaseVisitor {
 	@Override
 	public Binding visitTreatedPathRoot(HqlParser.TreatedPathRootContext ctx) {
 		final String treatAsName = ctx.dotIdentifierSequence().get( 1 ).getText();
-		final EntityType treatAsTypeDescriptor = parsingContext.getConsumerContext()
+		final SQMEntityType treatAsTypeDescriptor = parsingContext.getConsumerContext()
 				.getDomainMetamodel()
 				.resolveEntityType( treatAsName );
 		if ( treatAsTypeDescriptor == null ) {

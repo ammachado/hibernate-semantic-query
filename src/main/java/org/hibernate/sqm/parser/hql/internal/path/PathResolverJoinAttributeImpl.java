@@ -7,7 +7,7 @@
 package org.hibernate.sqm.parser.hql.internal.path;
 
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.PluralAttribute;
 import org.hibernate.sqm.domain.SingularAttribute;
 import org.hibernate.sqm.parser.SemanticException;
@@ -59,21 +59,21 @@ public class PathResolverJoinAttributeImpl extends PathResolverBasicImpl {
 			AttributeBindingSource lhs,
 			String terminalName) {
 		final Attribute attribute = resolveAttributeDescriptor( lhs, terminalName );
-		final EntityType subclassType = resolveBoundEntityType( attribute );
+		final SQMEntityType subclassType = resolveBoundEntityType( attribute );
 		return resolveTerminal( lhs, terminalName, attribute, subclassType );
 	}
 
-	private EntityType resolveBoundEntityType(Attribute attribute) {
+	private SQMEntityType resolveBoundEntityType(Attribute attribute) {
 		if ( attribute instanceof PluralAttribute ) {
 			final PluralAttribute pluralAttribute = (PluralAttribute) attribute;
-			if ( pluralAttribute.getElementType() instanceof EntityType ) {
-				return (EntityType) pluralAttribute.getElementType();
+			if ( pluralAttribute.getElementType() instanceof SQMEntityType ) {
+				return (SQMEntityType) pluralAttribute.getElementType();
 			}
 		}
 		else if ( attribute instanceof SingularAttribute ) {
 			final SingularAttribute singularAttribute = (SingularAttribute) attribute;
-			if ( singularAttribute.getType() instanceof EntityType ) {
-				return (EntityType) singularAttribute.getType();
+			if ( singularAttribute.getType() instanceof SQMEntityType ) {
+				return (SQMEntityType) singularAttribute.getType();
 			}
 		}
 
@@ -84,7 +84,7 @@ public class PathResolverJoinAttributeImpl extends PathResolverBasicImpl {
 			AttributeBindingSource lhs,
 			String terminalName,
 			Attribute attribute,
-			EntityType subclassType) {
+			SQMEntityType subclassType) {
 		return context().getFromElementBuilder().buildAttributeJoin(
 				fromElementSpace,
 				alias,
@@ -102,7 +102,7 @@ public class PathResolverJoinAttributeImpl extends PathResolverBasicImpl {
 			ResolutionContext context,
 			AttributeBindingSource lhs,
 			String terminalName,
-			EntityType subclassIndicator) {
+			SQMEntityType subclassIndicator) {
 		final Attribute attribute = resolveAttributeDescriptor( lhs, terminalName );
 		return resolveTerminal( lhs, terminalName, attribute, subclassIndicator );
 	}

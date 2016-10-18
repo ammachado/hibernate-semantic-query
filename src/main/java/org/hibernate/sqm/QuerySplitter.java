@@ -11,8 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.sqm.BaseSemanticQueryWalker;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.PolymorphicEntityType;
 import org.hibernate.sqm.parser.ParsingException;
 import org.hibernate.sqm.path.AttributeBindingSource;
@@ -105,7 +104,7 @@ public class QuerySplitter {
 		final SelectStatement[] expanded = new SelectStatement[ unmappedPolymorphicDescriptor.getImplementors().size() ];
 
 		int i = -1;
-		for ( EntityType mappedDescriptor : unmappedPolymorphicDescriptor.getImplementors() ) {
+		for ( SQMEntityType mappedDescriptor : unmappedPolymorphicDescriptor.getImplementors() ) {
 			i++;
 			final UnmappedPolymorphismReplacer replacer = new UnmappedPolymorphismReplacer(
 					statement,
@@ -120,14 +119,14 @@ public class QuerySplitter {
 
 	private static class UnmappedPolymorphismReplacer extends BaseSemanticQueryWalker {
 		private final RootEntityFromElement unmappedPolymorphicFromElement;
-		private final EntityType mappedDescriptor;
+		private final SQMEntityType mappedDescriptor;
 
 		private Map<FromElement,FromElement> fromElementCopyMap = new HashMap<FromElement, FromElement>();
 
 		private UnmappedPolymorphismReplacer(
 				SelectStatement selectStatement,
 				RootEntityFromElement unmappedPolymorphicFromElement,
-				EntityType mappedDescriptor) {
+				SQMEntityType mappedDescriptor) {
 			this.unmappedPolymorphicFromElement = unmappedPolymorphicFromElement;
 			this.mappedDescriptor = mappedDescriptor;
 		}

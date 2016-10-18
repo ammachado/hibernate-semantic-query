@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.Type;
 import org.hibernate.sqm.path.FromElementBinding;
@@ -30,9 +30,9 @@ import org.hibernate.sqm.query.from.FromElement;
  */
 public class TreatedFromElementBinding implements FromElementBinding {
 	private final FromElement baseReference;
-	private final EntityType subclassIndicator;
+	private final SQMEntityType subclassIndicator;
 
-	public TreatedFromElementBinding(FromElement baseReference, EntityType subclassIndicator) {
+	public TreatedFromElementBinding(FromElement baseReference, SQMEntityType subclassIndicator) {
 		this.baseReference = baseReference;
 		this.subclassIndicator = subclassIndicator;
 	}
@@ -48,7 +48,7 @@ public class TreatedFromElementBinding implements FromElementBinding {
 	}
 
 	@Override
-	public EntityType getSubclassIndicator() {
+	public SQMEntityType getSubclassIndicator() {
 		return subclassIndicator;
 	}
 

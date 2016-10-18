@@ -8,7 +8,7 @@ package org.hibernate.sqm.query.from;
 
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.parser.common.ParsingContext;
 import org.hibernate.sqm.path.FromElementBinding;
 
@@ -54,7 +54,7 @@ public interface FromElement extends FromElementBinding, Downcastable {
 	 *
 	 * @see org.hibernate.sqm.path.AttributeBindingSource#getSubclassIndicator()
 	 */
-	EntityType getIntrinsicSubclassIndicator();
+	SQMEntityType getIntrinsicSubclassIndicator();
 
 	/**
 	 * Get the identification variable (alias) assigned to this FromElement.  If an explicit

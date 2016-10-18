@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.Type;
 import org.hibernate.sqm.path.FromElementBinding;
@@ -28,19 +28,19 @@ public abstract class AbstractFromElement implements FromElement {
 	private final String uid;
 	private final String alias;
 	private final Bindable bindableModelDescriptor;
-	private final EntityType subclassIndicator;
+	private final SQMEntityType subclassIndicator;
 	private final String sourcePath;
 
 	private final ManagedType attributeContributingType;
 
-	private Map<EntityType,Downcast> downcastMap;
+	private Map<SQMEntityType,Downcast> downcastMap;
 
 	protected AbstractFromElement(
 			FromElementSpace fromElementSpace,
 			String uid,
 			String alias,
 			Bindable bindableModelDescriptor,
-			EntityType subclassIndicator,
+			SQMEntityType subclassIndicator,
 			String sourcePath) {
 		this.fromElementSpace = fromElementSpace;
 		this.uid = uid;
@@ -73,7 +73,7 @@ public abstract class AbstractFromElement implements FromElement {
 	}
 
 	@Override
-	public EntityType getIntrinsicSubclassIndicator() {
+	public SQMEntityType getIntrinsicSubclassIndicator() {
 		return subclassIndicator;
 	}
 
@@ -93,7 +93,7 @@ public abstract class AbstractFromElement implements FromElement {
 	}
 
 	@Override
-	public EntityType getSubclassIndicator() {
+	public SQMEntityType getSubclassIndicator() {
 		return subclassIndicator;
 	}
 
@@ -116,7 +116,7 @@ public abstract class AbstractFromElement implements FromElement {
 	public void addDowncast(Downcast downcast) {
 		Downcast existing = null;
 		if ( downcastMap == null ) {
-			downcastMap = new HashMap<EntityType, Downcast>();
+			downcastMap = new HashMap<SQMEntityType, Downcast>();
 		}
 		else {
 			existing = downcastMap.get( downcast.getTargetType() );

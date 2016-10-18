@@ -6,12 +6,14 @@
  */
 package org.hibernate.sqm.domain;
 
+import javax.persistence.metamodel.EntityType;
+
 /**
  * Models information about an entity
  *
  * @author Steve Ebersole
  */
-public interface EntityType extends IdentifiableType, Bindable {
+public interface SQMEntityType<X> extends IdentifiableType, Bindable, EntityType<X> {
 	/**
 	 * Return the entity name.
 	 *

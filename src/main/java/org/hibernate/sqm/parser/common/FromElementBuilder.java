@@ -8,7 +8,7 @@ package org.hibernate.sqm.parser.common;
 
 import org.hibernate.sqm.parser.ParsingException;
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.query.JoinType;
 import org.hibernate.sqm.query.from.CrossJoinedFromElement;
 import org.hibernate.sqm.query.from.FromElement;
@@ -42,7 +42,7 @@ public class FromElementBuilder {
 	 */
 	public RootEntityFromElement makeRootEntityFromElement(
 			FromElementSpace fromElementSpace,
-			EntityType entityType,
+			SQMEntityType entityType,
 			String alias) {
 		if ( alias == null ) {
 			alias = parsingContext.getImplicitAliasGenerator().buildUniqueImplicitAlias();
@@ -71,7 +71,7 @@ public class FromElementBuilder {
 	public CrossJoinedFromElement makeCrossJoinedFromElement(
 			FromElementSpace fromElementSpace,
 			String uid,
-			EntityType entityType,
+			SQMEntityType entityType,
 			String alias) {
 		if ( alias == null ) {
 			alias = parsingContext.getImplicitAliasGenerator().buildUniqueImplicitAlias();
@@ -97,7 +97,7 @@ public class FromElementBuilder {
 	public QualifiedEntityJoinFromElement buildEntityJoin(
 			FromElementSpace fromElementSpace,
 			String alias,
-			EntityType entityType,
+			SQMEntityType entityType,
 			JoinType joinType) {
 		if ( alias == null ) {
 			alias = parsingContext.getImplicitAliasGenerator().buildUniqueImplicitAlias();
@@ -125,7 +125,7 @@ public class FromElementBuilder {
 			FromElementSpace fromElementSpace,
 			String alias,
 			Attribute attributeDescriptor,
-			EntityType subclassIndicator,
+			SQMEntityType subclassIndicator,
 			String path,
 			JoinType joinType,
 			FromElement lhs,

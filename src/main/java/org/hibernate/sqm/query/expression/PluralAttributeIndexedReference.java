@@ -9,7 +9,6 @@ package org.hibernate.sqm.query.expression;
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.PluralAttribute;
 import org.hibernate.sqm.domain.Type;

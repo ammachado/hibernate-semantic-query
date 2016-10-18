@@ -29,7 +29,7 @@ import javax.persistence.criteria.Subquery;
 import org.hibernate.sqm.NotYetImplementedException;
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.BasicType;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.PluralAttribute;
 import org.hibernate.sqm.domain.SingularAttribute;
 import org.hibernate.sqm.domain.Type;
@@ -691,13 +691,13 @@ public class CriteriaInterpreter implements CriteriaVisitor {
 	@Override
 	public EntityTypeExpression visitEntityType(String identificationVariable) {
 		final FromElement fromElement = currentQuerySpecProcessingState.findFromElementByIdentificationVariable( identificationVariable );
-		return new EntityTypeExpression( (EntityType) fromElement.getBoundModelType() );
+		return new EntityTypeExpression( (SQMEntityType) fromElement.getBoundModelType() );
 	}
 
 	@Override
 	public EntityTypeExpression visitEntityType(String identificationVariable, String attributeName) {
 		final FromElement fromElement = currentQuerySpecProcessingState.findFromElementByIdentificationVariable( identificationVariable );
-		return new EntityTypeExpression( (EntityType) fromElement.resolveAttribute( attributeName ) );
+		return new EntityTypeExpression( (SQMEntityType) fromElement.resolveAttribute( attributeName ) );
 	}
 
 	@Override

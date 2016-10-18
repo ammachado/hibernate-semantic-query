@@ -7,7 +7,7 @@
 package org.hibernate.sqm.query.expression;
 
 import org.hibernate.sqm.SemanticQueryWalker;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.Type;
 
 /**
@@ -16,14 +16,14 @@ import org.hibernate.sqm.domain.Type;
  * @author Steve Ebersole
  */
 public class EntityTypeExpression implements Expression {
-	private final EntityType entityTypeDescriptor;
+	private final SQMEntityType entityTypeDescriptor;
 
-	public EntityTypeExpression(EntityType entityTypeDescriptor) {
+	public EntityTypeExpression(SQMEntityType entityTypeDescriptor) {
 		this.entityTypeDescriptor = entityTypeDescriptor;
 	}
 
 	@Override
-	public EntityType getExpressionType() {
+	public SQMEntityType getExpressionType() {
 		return entityTypeDescriptor;
 	}
 

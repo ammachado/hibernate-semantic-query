@@ -12,9 +12,11 @@ import org.hibernate.sqm.query.SelectStatement;
 import org.hibernate.test.sqm.ConsumerContextImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaBuilderImpl;
 import org.hibernate.test.sqm.parser.criteria.tree.CriteriaQueryImpl;
+import org.hibernate.test.sqm.parser.criteria.tree.expression.LiteralExpression;
 import org.junit.Test;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.Calendar;
 
@@ -24,7 +26,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Steve Ebersole
  */
-public class LiteralTestCase extends AbstractCriteriaSmokeTests {
+public class NumericalTestCase extends AbstractCriteriaSmokeTests {
 
 
 	@Test
@@ -32,54 +34,18 @@ public class LiteralTestCase extends AbstractCriteriaSmokeTests {
 		final ConsumerContext consumerContext = new ConsumerContextImpl( buildMetamodel() );
 		final CriteriaBuilderImpl criteriaBuilder = new CriteriaBuilderImpl( consumerContext );
 
-		// Boolean literals:
-		Expression<Boolean> t = criteriaBuilder.literal(true);
-		Expression<Boolean> f = criteriaBuilder.literal(Boolean.FALSE);
-
-		// Numeric literals:
-		Expression<Integer> i1 = criteriaBuilder.literal(1);
-		Expression<Integer> i2 = criteriaBuilder.literal(Integer.valueOf(2));
-		Expression<Double> d = criteriaBuilder.literal(3.4);
-
-		// String literals:
-		Expression<String> empty = criteriaBuilder.literal("");
-		Expression<String> jpa = criteriaBuilder.literal("JPA");
-
-		// Date and Time literals:
-		Expression<java.sql.Date> today = criteriaBuilder.literal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-		Expression<java.sql.Time> time = criteriaBuilder.literal(new java.sql.Time(Calendar.getInstance().getTime().getTime()));
-//		Expression<java.sql.Timestamp> now = criteriaBuilder.literal(new java.sql.Timestamp());
-
-		// Enum literal:
-		Expression<Color> red = criteriaBuilder.literal(Color.RED);
-//
-//		// Entity Type literal:
-//		Expression<Class> type = cb.literal(MyEntity.class);
-
-
-		// Null Literal
-//		Expression n = criteriaBuilder.literal(null);
-
-		Expression<String> strNull = criteriaBuilder.nullLiteral(String.class);
-		Expression<Integer> intNull = criteriaBuilder.nullLiteral(Integer.class);
-
-
 		// Build a simple criteria ala `select e from Entity e`
 		final CriteriaQueryImpl<Object> criteria = (CriteriaQueryImpl<Object>) criteriaBuilder.createQuery();
 		Root root = criteria.from( "com.acme.Entity2" );
-//		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, red, root);
-		criteria.multiselect( t, f, i1, i2, d, empty, jpa, today, time, root);
+		Path basic1 = root.get("basic1");
+
+		Expression sumExpression = criteriaBuilder.sum(new LiteralExpression<Integer>(criteriaBuilder, new Integer(1)));
+
+		criteria.multiselect( sumExpression, basic1, root);
 
 		// now ask the interpreter to convert the criteria into SQM...
 		final SelectStatement sqm = SemanticQueryInterpreter.interpret( criteria, consumerContext );
 		assertThat( sqm.getQuerySpec().getFromClause().getFromElementSpaces().size(), is(1) ) ;
-	}
-
-
-	public enum Color {
-		RED,
-		BLUE,
-		GREEN
 	}
 
 }

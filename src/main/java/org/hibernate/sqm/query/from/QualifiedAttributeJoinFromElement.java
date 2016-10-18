@@ -9,7 +9,7 @@ package org.hibernate.sqm.query.from;
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.PluralAttribute;
 import org.hibernate.sqm.domain.SingularAttribute;
@@ -32,7 +32,7 @@ public class QualifiedAttributeJoinFromElement
 
 	private final AttributeBindingSource lhs;
 	private final Attribute joinedAttributeDescriptor;
-	private final EntityType intrinsicSubclassIndicator;
+	private final SQMEntityType intrinsicSubclassIndicator;
 	private final boolean fetched;
 
 	private Predicate onClausePredicate;
@@ -42,7 +42,7 @@ public class QualifiedAttributeJoinFromElement
 			String uid,
 			String alias,
 			Attribute joinedAttributeDescriptor,
-			EntityType intrinsicSubclassIndicator,
+			SQMEntityType intrinsicSubclassIndicator,
 			String sourcePath,
 			JoinType joinType,
 			AttributeBindingSource lhs,
@@ -91,7 +91,7 @@ public class QualifiedAttributeJoinFromElement
 	}
 
 	@Override
-	public EntityType getIntrinsicSubclassIndicator() {
+	public SQMEntityType getIntrinsicSubclassIndicator() {
 		return intrinsicSubclassIndicator;
 	}
 

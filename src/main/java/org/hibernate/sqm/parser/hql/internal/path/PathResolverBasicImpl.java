@@ -7,7 +7,7 @@
 package org.hibernate.sqm.parser.hql.internal.path;
 
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.parser.common.ResolutionContext;
 import org.hibernate.sqm.path.AttributeBinding;
 import org.hibernate.sqm.path.AttributeBindingSource;
@@ -32,7 +32,7 @@ public class PathResolverBasicImpl extends AbstractPathResolverImpl {
 
 	@Override
 	public Binding resolvePath(String... pathParts) {
-		return resolvePath( (EntityType) null, pathParts );
+		return resolvePath( (SQMEntityType) null, pathParts );
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class PathResolverBasicImpl extends AbstractPathResolverImpl {
 	}
 
 	@Override
-	public Binding resolvePath(EntityType subclassIndicator, String... pathParts) {
+	public Binding resolvePath(SQMEntityType subclassIndicator, String... pathParts) {
 		assert pathParts.length > 0;
 
 		// The given pathParts indicate either:
@@ -105,7 +105,7 @@ public class PathResolverBasicImpl extends AbstractPathResolverImpl {
 	@Override
 	public Binding resolvePath(
 			AttributeBindingSource lhs,
-			EntityType subclassIndicator,
+			SQMEntityType subclassIndicator,
 			String... pathParts) {
 		final AttributeBindingSource terminalLhs = resolveAnyIntermediateAttributePathJoins(
 				lhs,
@@ -131,7 +131,7 @@ public class PathResolverBasicImpl extends AbstractPathResolverImpl {
 			ResolutionContext context,
 			AttributeBindingSource lhs,
 			String terminalName,
-			EntityType subclassIndicator) {
+			SQMEntityType subclassIndicator) {
 		final Attribute joinedAttribute = resolveAttributeDescriptor( lhs, terminalName );
 		log.debugf( "Resolved terminal treated-path : %s -> %s", joinedAttribute, subclassIndicator );
 		final QualifiedAttributeJoinFromElement join = buildAttributeJoin(

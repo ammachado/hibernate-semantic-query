@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import org.hibernate.sqm.domain.Attribute;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.IdentifierDescriptor;
 import org.hibernate.sqm.domain.IdentifierDescriptorSingleAttribute;
 import org.hibernate.sqm.domain.ManagedType;
@@ -62,7 +62,7 @@ public abstract class AbstractPathResolverImpl implements PathResolver {
 	protected QualifiedAttributeJoinFromElement buildAttributeJoin(
 			FromElement lhsFromElement,
 			Attribute joinedAttributeDescriptor,
-			EntityType subclassIndicator) {
+			SQMEntityType subclassIndicator) {
 		return context().getFromElementBuilder().buildAttributeJoin(
 				lhsFromElement.getContainingSpace(),
 				null,
@@ -117,8 +117,8 @@ public abstract class AbstractPathResolverImpl implements PathResolver {
 			return attributeDescriptor;
 		}
 
-		if ( managedType instanceof EntityType ) {
-			final EntityType entityType = (EntityType) managedType;
+		if ( managedType instanceof SQMEntityType ) {
+			final SQMEntityType entityType = (SQMEntityType) managedType;
 			final IdentifierDescriptor entityIdDescriptor = entityType.getIdentifierDescriptor();
 			final String referableIdAttributeName = entityIdDescriptor.getReferableAttributeName();
 

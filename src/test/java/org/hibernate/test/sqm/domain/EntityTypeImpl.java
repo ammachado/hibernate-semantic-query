@@ -6,10 +6,12 @@
  */
 package org.hibernate.test.sqm.domain;
 
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.IdentifiableType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.Type;
+
+import javax.persistence.metamodel.EntityType;
 
 /**
  * @author Steve Ebersole

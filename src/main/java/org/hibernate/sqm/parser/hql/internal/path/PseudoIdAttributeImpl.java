@@ -6,7 +6,7 @@
  */
 package org.hibernate.sqm.parser.hql.internal.path;
 
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.domain.IdentifierDescriptorMultipleAttribute;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.SingularAttribute;
@@ -18,9 +18,9 @@ import org.hibernate.sqm.domain.Type;
  * @author Steve Ebersole
  */
 class PseudoIdAttributeImpl implements SingularAttribute {
-	private final EntityType entityType;
+	private final SQMEntityType entityType;
 
-	public PseudoIdAttributeImpl(EntityType entityType) {
+	public PseudoIdAttributeImpl(SQMEntityType entityType) {
 		this.entityType = entityType;
 		assert entityType.getIdentifierDescriptor() instanceof IdentifierDescriptorMultipleAttribute;
 	}

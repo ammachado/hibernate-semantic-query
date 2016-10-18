@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.parser.ParsingException;
 import org.hibernate.sqm.query.JoinType;
 import org.hibernate.sqm.query.from.CrossJoinedFromElement;
@@ -129,7 +129,7 @@ public class QuerySpecProcessingStateDmlImpl implements QuerySpecProcessingState
 
 		@Override
 		public CrossJoinedFromElement makeCrossJoinedFromElement(
-				FromElementSpace fromElementSpace, String uid, EntityType entityType, String alias) {
+				FromElementSpace fromElementSpace, String uid, SQMEntityType entityType, String alias) {
 			throw new ParsingException( "DML from-clause cannot define joins" );
 		}
 
@@ -137,7 +137,7 @@ public class QuerySpecProcessingStateDmlImpl implements QuerySpecProcessingState
 		public QualifiedEntityJoinFromElement buildEntityJoin(
 				FromElementSpace fromElementSpace,
 				String alias,
-				EntityType entityType,
+				SQMEntityType entityType,
 				JoinType joinType) {
 			throw new ParsingException( "DML from-clause cannot define joins" );
 		}
@@ -147,7 +147,7 @@ public class QuerySpecProcessingStateDmlImpl implements QuerySpecProcessingState
 				FromElementSpace fromElementSpace,
 				String alias,
 				Attribute attributeDescriptor,
-				EntityType subclassIndicator,
+				SQMEntityType subclassIndicator,
 				String path,
 				JoinType joinType,
 				FromElement lhs,

@@ -7,7 +7,7 @@
 package org.hibernate.sqm.query.from;
 
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.query.JoinType;
 
 /**
@@ -21,7 +21,7 @@ public abstract class AbstractJoinedFromElement extends AbstractFromElement impl
 			String uid,
 			String alias,
 			Bindable bindableModelDescriptor,
-			EntityType intrinsicSubclassIndicator,
+			SQMEntityType intrinsicSubclassIndicator,
 			String sourcePath,
 			JoinType joinType) {
 		super( fromElementSpace, uid, alias, bindableModelDescriptor, intrinsicSubclassIndicator, sourcePath );

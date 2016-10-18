@@ -17,6 +17,6 @@ public interface DomainMetamodel {
 	<T> BasicType<T> getBasicType(Class<T> javaType);
 	<T> BasicType<T> getBasicType(Class<T> javaType, TemporalType temporalType);
 
-	EntityType resolveEntityType(Class javaType);
-	EntityType resolveEntityType(String name);
+	SQMEntityType resolveEntityType(Class javaType);
+	SQMEntityType resolveEntityType(String name);
 }

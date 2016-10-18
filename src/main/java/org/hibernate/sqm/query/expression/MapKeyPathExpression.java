@@ -8,10 +8,8 @@ package org.hibernate.sqm.query.expression;
 
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Bindable;
-import org.hibernate.sqm.domain.EntityType;
 import org.hibernate.sqm.domain.ManagedType;
 import org.hibernate.sqm.domain.Type;
-import org.hibernate.sqm.parser.SemanticException;
 import org.hibernate.sqm.path.AttributeBindingSource;
 import org.hibernate.sqm.path.FromElementBinding;
 import org.hibernate.sqm.query.from.FromElement;

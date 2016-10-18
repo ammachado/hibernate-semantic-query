@@ -6,7 +6,7 @@
  */
 package org.hibernate.sqm.parser.hql.internal.path;
 
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.path.AttributeBindingSource;
 import org.hibernate.sqm.path.Binding;
 import org.hibernate.sqm.query.from.FromElement;
@@ -50,7 +50,7 @@ public interface PathResolver {
 	 *
 	 * @return The resolve path, or {@code null}.
 	 */
-	Binding resolvePath(EntityType subclassIndicator, String... pathParts);
+	Binding resolvePath(SQMEntityType subclassIndicator, String... pathParts);
 
 	/**
 	 * Resolve the given path relative to a given left-hand side applying the specified
@@ -62,6 +62,6 @@ public interface PathResolver {
 	 *
 	 * @return The resolve path, or {@code null}.
 	 */
-	Binding resolvePath(AttributeBindingSource lhs, EntityType subclassIndicator, String... pathParts);
+	Binding resolvePath(AttributeBindingSource lhs, SQMEntityType subclassIndicator, String... pathParts);
 
 }

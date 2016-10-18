@@ -8,7 +8,7 @@ package org.hibernate.sqm.query.from;
 
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 
 /**
  * @author Steve Ebersole
@@ -18,7 +18,7 @@ public class RootEntityFromElement extends AbstractFromElement {
 			FromElementSpace fromElementSpace,
 			String uid,
 			String alias,
-			EntityType entityTypeDescriptor) {
+			SQMEntityType entityTypeDescriptor) {
 		super( fromElementSpace, uid, alias, entityTypeDescriptor, entityTypeDescriptor, alias );
 	}
 
@@ -27,12 +27,12 @@ public class RootEntityFromElement extends AbstractFromElement {
 	}
 
 	@Override
-	public EntityType getBoundModelType() {
-		return (EntityType) super.getBoundModelType();
+	public SQMEntityType getBoundModelType() {
+		return (SQMEntityType) super.getBoundModelType();
 	}
 
 	@Override
-	public EntityType getIntrinsicSubclassIndicator() {
+	public SQMEntityType getIntrinsicSubclassIndicator() {
 		// a root FromElement cannot indicate a subclass intrinsically (as part of its declaration)
 		return null;
 	}

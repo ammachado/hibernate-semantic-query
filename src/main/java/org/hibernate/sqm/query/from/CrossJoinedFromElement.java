@@ -8,7 +8,7 @@ package org.hibernate.sqm.query.from;
 
 import org.hibernate.sqm.SemanticQueryWalker;
 import org.hibernate.sqm.domain.Attribute;
-import org.hibernate.sqm.domain.EntityType;
+import org.hibernate.sqm.domain.SQMEntityType;
 import org.hibernate.sqm.query.JoinType;
 
 /**
@@ -20,7 +20,7 @@ public class CrossJoinedFromElement extends AbstractFromElement implements Joine
 			FromElementSpace fromElementSpace,
 			String uid,
 			String alias,
-			EntityType entityTypeDescriptor) {
+			SQMEntityType entityTypeDescriptor) {
 		super( fromElementSpace, uid, alias, entityTypeDescriptor, entityTypeDescriptor, alias );
 	}
 
@@ -29,8 +29,8 @@ public class CrossJoinedFromElement extends AbstractFromElement implements Joine
 	}
 
 	@Override
-	public EntityType getBoundModelType() {
-		return (EntityType) super.getBoundModelType();
+	public SQMEntityType getBoundModelType() {
+		return (SQMEntityType) super.getBoundModelType();
 	}
 
 	@Override
